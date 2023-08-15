@@ -60,7 +60,7 @@ if ($transactions === null) {
                     <?php
                     for ($index = 0; $index < $totalPending; $index++) {
                         $transaction = $pendingTransactions[$index];
-                        if ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] > 1) {
+                        if ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] > 1 || $transaction[$_SESSION["username"]]==1 ) {
                             echo "<tr>";
                             echo "<td>{$transaction['id']}</td>";
                             echo "<td>{$transaction['from']}</td>";

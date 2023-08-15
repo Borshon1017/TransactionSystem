@@ -3,19 +3,36 @@ session_start();
 
 $id = $_POST["id"];
 $adminField = $_SESSION["username"];
+$adminTransactionsFile = "admins/" . $adminField . "/".$adminField."_transactions.json";
+$mainTransactionsFile = "transactions.json";
 
-$transactionsFile = "transactions.json";
-$transactionsData = file_get_contents($transactionsFile);
-$transactions = json_decode($transactionsData, true);
+$adminTransactionsData = file_get_contents($adminTransactionsFile);
+$adminTransactions = json_decode($adminTransactionsData, true);
 
-$totalTransactions = count($transactions["transactions"]);
-for ($i = 0; $i < $totalTransactions; $i++) {
-    if ($transactions["transactions"][$i]["id"] == $id) {
-        $transactions["transactions"][$i][$adminField] = 1;
+if ($adminTransactions === null) {
+    $adminTransactions = ["transactions" => []];
+}
+
+$mainTransactionsData = file_get_contents($mainTransactionsFile);
+$mainTransactions = json_decode($mainTransactionsData, true);
+
+$approvedTransaction = null;
+
+foreach ($mainTransactions["transactions"] as &$transaction) {
+    if ($transaction["id"] == $id) {
+        $transaction[$adminField] = 1;
+        $approvedTransaction = $transaction;
         break;
     }
 }
 
-file_put_contents($transactionsFile, json_encode($transactions, JSON_PRETTY_PRINT));
+if ($approvedTransaction !== null) {
+    $adminTransactions["transactions"][] = $approvedTransaction;
+    file_put_contents($adminTransactionsFile, json_encode($adminTransactions, JSON_PRETTY_PRINT));
 
+    file_put_contents($mainTransactionsFile, json_encode($mainTransactions, JSON_PRETTY_PRINT));
+    echo "Transaction approved successfully.";
+} else {
+    echo "Transaction not found.";
+}
 ?>
