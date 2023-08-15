@@ -58,7 +58,7 @@
     <div>
         <h1>Client Dashboard</h1>
         <a href="client_send_money.php" class="buttonSend">৳ Send Money</a>
-        <a href="Logout.php" class="buttonOut">⎋ Logout</a>
+        <a href="logout.php" class="buttonOut">⎋ Logout</a>
     </div>
     <font face="Yu Gothic Light">
 </body>

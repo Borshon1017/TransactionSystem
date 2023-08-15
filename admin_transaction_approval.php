@@ -14,6 +14,23 @@ if ($transactions === null) {
     <title>Admin Transaction Approval</title>
 </head>
 <body>
+    <style>
+        button[type="submit"] {
+            background-color: green;
+            border: none;
+            color: white;
+            width: 100px;
+            height: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+       
+        button[type="submit"]:hover {
+            background-color: white;
+            color: black;
+        }
+        </style>
     <h2 align="center">Admin Transaction Approval</h2>
 
     <div style="display: flex;">
@@ -39,7 +56,7 @@ if ($transactions === null) {
                         echo "<td>{$transaction['from']}</td>";
                         echo "<td>{$transaction['to']}</td>";
                         echo "<td>{$transaction['amount']}</td>";
-                        echo "<td><button onclick=\"approveTransaction({$transaction['id']})\">Approve</button></td>";
+                        echo "<td><button  type=\"submit\" onclick=\"approveTransaction({$transaction['id']})\">Approve</button></td>";
                         echo "</tr>";
                     }
                 }
