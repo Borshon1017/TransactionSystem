@@ -34,5 +34,5 @@ $transactions["transactions"][] = $newTransaction;
 file_put_contents($transactionsFile, json_encode($transactions, JSON_PRETTY_PRINT));
 
 header("Location: client_send_money.php?success=true");
-exit();
+
 ?>

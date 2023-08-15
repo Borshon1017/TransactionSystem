@@ -1,3 +1,13 @@
+<?php
+session_start();
+$transactionsFile = "transactions.json";
+$transactionsData = file_get_contents($transactionsFile);
+$transactions = json_decode($transactionsData, true);
+
+if ($transactions === null) {
+    $transactions = ["transactions" => []];
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +33,7 @@
 
                 for ($index = 0; $index < $totalPending; $index++) {
                     $transaction = $pendingTransactions[$index];
-                    if ($transaction['admin1'] == 0) {
+                    if ($transaction[$_SESSION["username"]] == 0) {
                         echo "<tr>";
                         echo "<td>{$transaction['id']}</td>";
                         echo "<td>{$transaction['from']}</td>";
@@ -50,7 +60,7 @@
                     <?php
                     for ($index = 0; $index < $totalPending; $index++) {
                         $transaction = $pendingTransactions[$index];
-                        if ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] > 0) {
+                        if ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] > 1) {
                             echo "<tr>";
                             echo "<td>{$transaction['id']}</td>";
                             echo "<td>{$transaction['from']}</td>";
@@ -67,24 +77,20 @@
 
     <script>
     function approveTransaction(id) {
-       
-        fetch("process_approve_transaction.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "id=" + encodeURIComponent(id),
-        })
-        .then(response => {
-            if (response.ok) {
-               
-                location.reload();
-            } 
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "process_approve_transaction.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    location.reload(); 
+                } else {
+                    console.error("Error approving transaction.");
+                }
+            }
+        };
+        xhr.send("id=" + encodeURIComponent(id));
     }
-    </script>
+</script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+require_once('database.php');
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -8,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-    $conn = mysqli_connect('localhost', 'root', '', 'iMBD');
+    $conn = dbConnection();
 
 
     $query = "SELECT * FROM userinfo WHERE username='$username' AND password='$password'";
