@@ -36,7 +36,7 @@
             background-color: black;
             border: none;
             color: white;
-            width: 100px;
+            width: 150px;
             height: 50px;
             text-align: center;
             line-height: 50px;
@@ -57,8 +57,8 @@
 <font face="Yu Gothic Light">
     <div>
         <h1>Client Dashboard</h1>
-        <a href="client_send_money.php" class="buttonSend">Send Money</a>
-        <a href="Logout.php" class="buttonOut">Logout</a>
+        <a href="client_send_money.php" class="buttonSend">৳ Send Money</a>
+        <a href="Logout.php" class="buttonOut">⎋ Logout</a>
     </div>
     <font face="Yu Gothic Light">
 </body>

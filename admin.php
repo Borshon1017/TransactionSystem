@@ -57,8 +57,8 @@
 <font face="Yu Gothic Light">
     <div>
         <h1>Client Dashboard</h1>
-        <a href="admin_transaction_approval.php" class="buttonSend">Approve Transactions</a>
-        <a href="Logout.php" class="buttonOut">Logout</a>
+        <a href="admin_transaction_approval.php" class="buttonSend">✓ Approve Transactions</a>
+        <a href="Logout.php" class="buttonOut">⎋ Logout</a>
     </div>
     <font face="Yu Gothic Light">
 </body>
