@@ -1,0 +1,14 @@
+{
+    "transactions": [
+        {
+            "id": 3,
+            "from": "admin1",
+            "to": "boss9999",
+            "date": "15-08-2023",
+            "amount": "444",
+            "admin1": 1,
+            "admin2": 0,
+            "admin3": 0
+        }
+    ]
+}
