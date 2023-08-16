@@ -37,6 +37,7 @@ th, td {
   padding: 10px;
 }
         </style>
+        <font face="Yu Gothic Light">
     <h2 align="center">Admin Transaction Approval</h2>
 
     <div style="display: flex;">
@@ -147,5 +148,6 @@ th, td {
         xhr.send("rid=" + encodeURIComponent(id));
     }
 </script>
+<font face="Yu Gothic Light">
 </body>
 </html>

@@ -1,37 +1,4 @@
-<?php
-require_once('database.php');
-session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-
-
-
-    $conn = dbConnection();
-
-
-    $query = "SELECT * FROM userinfo WHERE username='$username' AND password='$password'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION["username"] = $row["username"];
-        $_SESSION["role"] = $row["role"];
-        
-        if ($row["role"] === "Client") {
-            header("Location: client.php");
-            
-        } elseif ($row["role"] === "Admin") {
-            header("Location: admin.php");
-          
-        }
-    } 
-
-
-}
-?>
 <!DOCTYPE html>
 
 <style>
@@ -73,14 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <font face="Yu Gothic Light">
 <div class="container">
     <h1>Money Transfer System</h1>
-    <form method="post" action="">
+    <form method="post" action="login_code.php">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
         
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br><br>
         
-        <input type="submit" value="🔑 Login ">
+        <input type="submit" name="submit" value="🔑 Login ">
     </form>
     </div>
     </font>
