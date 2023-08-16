@@ -6,7 +6,7 @@
             "to": "recipient",
             "date": "10-08-2023",
             "amount": "100",
-            "admin1": 0,
+            "admin1": 10,
             "admin2": 0,
             "admin3": 0
         },
@@ -16,7 +16,7 @@
             "to": "boss12",
             "date": "15-08-2023",
             "amount": "666",
-            "admin1": 0,
+            "admin1": 10,
             "admin2": 0,
             "admin3": 0
         },
@@ -26,7 +26,7 @@
             "to": "boss9999",
             "date": "15-08-2023",
             "amount": "444",
-            "admin1": 1,
+            "admin1": 0,
             "admin2": 0,
             "admin3": 0
         }

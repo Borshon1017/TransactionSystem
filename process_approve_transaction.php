@@ -1,16 +1,35 @@
 <?php
 session_start();
 
-$id = $_POST["id"];
+$approvedId = $_POST["aid"];
+$rejectedId = $_POST["rid"];
+
 $adminField = $_SESSION["username"];
-$adminTransactionsFile = "admins/" . $adminField . "/".$adminField."_transactions.json";
+
 $mainTransactionsFile = "transactions.json";
 
-$adminTransactionsData = file_get_contents($adminTransactionsFile);
-$adminTransactions = json_decode($adminTransactionsData, true);
+$admin1TransactionsFile = "admins/admin1/admin1_transactions.json";
+$admin2TransactionsFile = "admins/admin2/admin2_transactions.json";
+$admin3TransactionsFile = "admins/admin3/admin3_transactions.json";
 
-if ($adminTransactions === null) {
-    $adminTransactions = ["transactions" => []];
+
+$admin1TransactionsData = file_get_contents($admin1TransactionsFile);
+$admin2TransactionsData = file_get_contents($admin2TransactionsFile);
+$admin3TransactionsData = file_get_contents($admin3TransactionsFile);
+
+
+$admin1Transactions = json_decode($admin1TransactionsData, true);
+$admin2Transactions = json_decode($admin2TransactionsData, true);
+$admin3Transactions = json_decode($admin3TransactionsData, true);
+
+if ($admin1Transactions === null) {
+    $admin1Transactions = ["transactions" => []];
+}
+if ($admin2Transactions === null) {
+    $admin2Transactions = ["transactions" => []];
+}
+if ($admin3Transactions === null) {
+    $admin3Transactions = ["transactions" => []];
 }
 
 $mainTransactionsData = file_get_contents($mainTransactionsFile);
@@ -19,19 +38,26 @@ $mainTransactions = json_decode($mainTransactionsData, true);
 $approvedTransaction = null;
 
 foreach ($mainTransactions["transactions"] as &$transaction) {
-    if ($transaction["id"] == $id) {
+    if ($transaction["id"] == $approvedId) {
         $transaction[$adminField] = 1;
+        $approvedTransaction = $transaction;
+        break;
+    } elseif ($transaction["id"] == $rejectedId) {
+        $transaction[$adminField] = 10; // Set to 10 for rejection
         $approvedTransaction = $transaction;
         break;
     }
 }
 
 if ($approvedTransaction !== null) {
-    $adminTransactions["transactions"][] = $approvedTransaction;
-    file_put_contents($adminTransactionsFile, json_encode($adminTransactions, JSON_PRETTY_PRINT));
-
+    $admin1Transactions["transactions"][] = $approvedTransaction;
+    $admin2Transactions["transactions"][] = $approvedTransaction;
+    $admin3Transactions["transactions"][] = $approvedTransaction;
+    file_put_contents($admin1TransactionsFile, json_encode($admin1Transactions, JSON_PRETTY_PRINT));
+    file_put_contents($admin2TransactionsFile, json_encode($admin2Transactions, JSON_PRETTY_PRINT));
+    file_put_contents($admin3TransactionsFile, json_encode($admin3Transactions, JSON_PRETTY_PRINT));
     file_put_contents($mainTransactionsFile, json_encode($mainTransactions, JSON_PRETTY_PRINT));
-    echo "Transaction approved successfully.";
+    echo "Transaction processed successfully.";
 } else {
     echo "Transaction not found.";
 }

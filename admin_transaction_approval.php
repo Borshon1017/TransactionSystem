@@ -16,7 +16,7 @@ if ($transactions === null) {
 <body>
     <style>
         button[type="submit"] {
-            background-color: green;
+            background-color: Black;
             border: none;
             color: white;
             width: 100px;
@@ -42,7 +42,9 @@ if ($transactions === null) {
                     <th>From</th>
                     <th>To</th>
                     <th>Amount</th>
-                    <th>Action</th>
+                    <th>Vote Count</th>
+                    <th>Accept</th>
+                    <th>Reject</th>
                 </tr>
                 <?php
                 $pendingTransactions = $transactions["transactions"];
@@ -50,13 +52,28 @@ if ($transactions === null) {
 
                 for ($index = 0; $index < $totalPending; $index++) {
                     $transaction = $pendingTransactions[$index];
-                    if ($transaction[$_SESSION["username"]] == 0) {
+                    if ($transaction[$_SESSION["username"]] == 0 && ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] < 9)) {
                         echo "<tr>";
                         echo "<td>{$transaction['id']}</td>";
                         echo "<td>{$transaction['from']}</td>";
                         echo "<td>{$transaction['to']}</td>";
                         echo "<td>{$transaction['amount']}</td>";
+                        $TotalCount=$transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'];
+                        if ($TotalCount==0)
+                        {
+                            echo "<td>🚫 </td>";
+                        }
+                        if ($TotalCount==1)
+                        {
+                            echo "<td>👤 </td>";
+                        }
+                        if ($TotalCount==2)
+                        {
+                            echo "<td> 👤👤</td>";
+                        }
+                        
                         echo "<td><button  type=\"submit\" onclick=\"approveTransaction({$transaction['id']})\">Approve</button></td>";
+                        echo "<td><button  type=\"submit\" onclick=\"rejectTransaction({$transaction['id']})\">Reject</button></td>";
                         echo "</tr>";
                     }
                 }
@@ -77,7 +94,7 @@ if ($transactions === null) {
                     <?php
                     for ($index = 0; $index < $totalPending; $index++) {
                         $transaction = $pendingTransactions[$index];
-                        if ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] > 1 || $transaction[$_SESSION["username"]]==1 ) {
+                        if ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] > 1 && ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] < 9) || $transaction[$_SESSION["username"]]==1 ) {
                             echo "<tr>";
                             echo "<td>{$transaction['id']}</td>";
                             echo "<td>{$transaction['from']}</td>";
@@ -94,7 +111,7 @@ if ($transactions === null) {
 
     <script>
     function approveTransaction(id) {
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open("POST", "process_approve_transaction.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
@@ -106,7 +123,22 @@ if ($transactions === null) {
                 }
             }
         };
-        xhr.send("id=" + encodeURIComponent(id));
+        xhr.send("aid=" + encodeURIComponent(id));
+    }
+    function rejectTransaction(id) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "process_approve_transaction.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    location.reload(); 
+                } else {
+                    console.error("Error approving transaction.");
+                }
+            }
+        };
+        xhr.send("rid=" + encodeURIComponent(id));
     }
 </script>
 </body>
