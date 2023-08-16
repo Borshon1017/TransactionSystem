@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $transactionsFile = "transactions.json";
 $transactionsData = file_get_contents($transactionsFile);
 $transactions = json_decode($transactionsData, true);
@@ -89,7 +90,7 @@ th, td {
         </div>
 
         <div style="flex: 1;">
-            <h3>Approved Transactions</h3>
+            <h3> &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Approved Transactions</h3>
             <ul>
                 <table border="1">
                     <tr>
