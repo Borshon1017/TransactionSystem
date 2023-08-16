@@ -30,6 +30,12 @@ if ($transactions === null) {
             background-color: white;
             color: black;
         }
+        table {
+  border-spacing: 0px;
+}
+th, td {
+  padding: 10px;
+}
         </style>
     <h2 align="center">Admin Transaction Approval</h2>
 
