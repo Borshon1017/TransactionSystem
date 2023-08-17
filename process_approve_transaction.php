@@ -22,28 +22,22 @@ $admin1Transactions = json_decode($admin1TransactionsData, true);
 $admin2Transactions = json_decode($admin2TransactionsData, true);
 $admin3Transactions = json_decode($admin3TransactionsData, true);
 
-if ($admin1Transactions === null) {
-    $admin1Transactions = ["transactions" => []];
-}
-if ($admin2Transactions === null) {
-    $admin2Transactions = ["transactions" => []];
-}
-if ($admin3Transactions === null) {
-    $admin3Transactions = ["transactions" => []];
-}
+
 
 $mainTransactionsData = file_get_contents($mainTransactionsFile);
 $mainTransactions = json_decode($mainTransactionsData, true);
 
 $approvedTransaction = null;
 
-foreach ($mainTransactions["transactions"] as &$transaction) {
+for ($i = 0; $i < count($mainTransactions["transactions"]); $i++) {
+    $transaction = &$mainTransactions["transactions"][$i];
+    
     if ($transaction["id"] == $approvedId) {
         $transaction[$adminField] = 1;
         $approvedTransaction = $transaction;
         break;
     } elseif ($transaction["id"] == $rejectedId) {
-        $transaction[$adminField] = 10; // Set to 10 for rejection
+        $transaction[$adminField] = 10; 
         $approvedTransaction = $transaction;
         break;
     }

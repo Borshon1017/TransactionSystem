@@ -33,6 +33,16 @@ $transactions["transactions"][] = $newTransaction;
 
 file_put_contents($transactionsFile, json_encode($transactions, JSON_PRETTY_PRINT));
 
-header("Location: client_send_money.php?success=true");
+
 
 ?>
+</head>
+<body>
+<font face="Yu Gothic Light">
+    <div>
+        <h1 align="center">Transaction Sucessful ✔️</h1>
+    
+    </div>
+    <font face="Yu Gothic Light">
+</body>
+</html>

@@ -5,9 +5,7 @@ $transactionsFile = "transactions.json";
 $transactionsData = file_get_contents($transactionsFile);
 $transactions = json_decode($transactionsData, true);
 
-if ($transactions === null) {
-    $transactions = ["transactions" => []];
-}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,7 +40,7 @@ th, td {
     <h2 align="center">Admin Transaction Approval</h2>
 
     <div style="display: flex;">
-        <div style="flex: 1;">
+        <div >
             <h3>Pending Transactions</h3>
             <table border="1">
                 <tr>
@@ -60,7 +58,7 @@ th, td {
 
                 for ($index = 0; $index < $totalPending; $index++) {
                     $transaction = $pendingTransactions[$index];
-                    if ($transaction[$_SESSION["username"]] == 0 && ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] < 9)) {
+                    if ($transaction[$_SESSION["username"]] == 0 && ($transaction['admin1'] + $transaction['admin2'] + $transaction['admin3'] < 2) ) {
                         echo "<tr>";
                         echo "<td>{$transaction['id']}</td>";
                         echo "<td>{$transaction['from']}</td>";
@@ -89,7 +87,7 @@ th, td {
             </table>
         </div>
 
-        <div style="flex: 1;">
+        <div >
             <h3> &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Approved Transactions</h3>
             <ul>
                 <table border="1">
